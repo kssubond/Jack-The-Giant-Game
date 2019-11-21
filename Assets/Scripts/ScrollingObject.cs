@@ -9,7 +9,7 @@ public class ScrollingObject : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(0, GameController.instance.scrollSpeed);
+        rb.velocity = new Vector2(0, -GameController.instance.scrollSpeed);
     }
 
     //void Update()

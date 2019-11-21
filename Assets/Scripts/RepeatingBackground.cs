@@ -15,7 +15,7 @@ public class RepeatingBackground : MonoBehaviour
 
     void Update()
     {
-        if(transform.position.y < -groundVerticalLength)
+        if(transform.position.y > groundVerticalLength)
         {
             RepositionBackground();
         }
@@ -23,7 +23,7 @@ public class RepeatingBackground : MonoBehaviour
 
     void RepositionBackground()
     {
-        Vector2 groundOffset = new Vector2(0, groundVerticalLength * 2f);
+        Vector2 groundOffset = new Vector2(0, -groundVerticalLength * 2f);
         transform.position = (Vector2)transform.position + groundOffset;
     }
 }
