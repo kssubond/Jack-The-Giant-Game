@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
-    //public GameObject gameOverText;
-    public float scrollSpeed = -1.5f;
 
+    //public GameObject gameOverText;
+
+    public float scrollSpeed = 1.5f;
     public bool gameOver = false;
 
     void Awake()

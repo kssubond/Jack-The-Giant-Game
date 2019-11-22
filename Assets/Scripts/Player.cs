@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed = 10f;
+    public float thresholdY = 0;
+
+    private bool isDead = false;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -18,29 +21,50 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         PlayerMovement();
+
+        if (GameController.instance.gameOver == true)
+        {
+            if (transform.position.y < thresholdY)
+            {
+                GameController.instance.PlayerDied();
+                Destroy(gameObject);
+            }
+        }
     }
     void PlayerMovement()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        Vector3 temp = transform.localScale;
-        Vector2 movement = new Vector2(moveHorizontal, 0);
-        rb.AddForce(movement * speed);
+        if (isDead == false)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            Vector3 temp = transform.localScale;
+            Vector2 movement = new Vector2(moveHorizontal, 0);
+            rb.AddForce(movement * speed);
 
-        if (moveHorizontal > 0)
-        {
-            anim.SetBool("Walk", true);
-            temp.x = 1f;
-            transform.localScale = temp;
+            if (moveHorizontal > 0)
+            {
+                anim.SetBool("Walk", true);
+                temp.x = 1.4f;
+                transform.localScale = temp;
+            }
+            else if (moveHorizontal < 0)
+            {
+                anim.SetBool("Walk", true);
+                temp.x = -1.4f;
+                transform.localScale = temp;
+            }
+            else
+            {
+                anim.SetBool("Walk", false);
+            }
         }
-        else if (moveHorizontal < 0)
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Deadly"))
         {
-            anim.SetBool("Walk", true);
-            temp.x = -1f;
-            transform.localScale = temp;
-        }
-        else
-        {
-            anim.SetBool("Walk", false);
+            GameController.instance.PlayerDied();
+            Destroy(gameObject);
         }
     }
 }

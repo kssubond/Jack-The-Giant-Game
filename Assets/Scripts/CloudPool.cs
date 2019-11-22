@@ -15,20 +15,18 @@ public class CloudPool : MonoBehaviour
 
     private Vector2 objectPoolPosition = new Vector2(0, 5.5f);       
     private float spawnYPosition = -5.5f;
-    
     private float timeSinceLastSpawned;
-
     private int lastNumber;
 
 
     void Start()
     {
         timeSinceLastSpawned = 0f;
-        clouds = new GameObject[cloudPoolSize];
+        clouds = new GameObject[cloudPrefabs.Length];
 
-        for (int i = 0; i < cloudPoolSize; i++)
+        for (int i = 0; i < cloudPrefabs.Length; i++)
         {
-            clouds[i] = (GameObject)Instantiate(cloudPrefabs[i], objectPoolPosition, Quaternion.identity);
+            clouds[i] = Instantiate(cloudPrefabs[GetRandom(0, cloudPrefabs.Length)], objectPoolPosition, Quaternion.identity);
         }
     }
 
@@ -39,11 +37,8 @@ public class CloudPool : MonoBehaviour
         if (GameController.instance.gameOver == false && timeSinceLastSpawned >= spawnRate)
         {
             timeSinceLastSpawned = 0f;
-
             float spawnXPosition = GetRandom(cloudMin, cloudMax);
-
             clouds[currentCloud].transform.position = new Vector2(spawnXPosition, spawnYPosition);
-
             currentCloud++;
 
             if (currentCloud >= cloudPoolSize)
