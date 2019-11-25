@@ -22,11 +22,11 @@ public class Player : MonoBehaviour
     {
         PlayerMovement();
 
-        if (GameController.instance.gameOver == true)
+        if (GameControl.instance.gameOver == true)
         {
             if (transform.position.y < thresholdY)
             {
-                GameController.instance.PlayerDied();
+                GameControl.instance.PlayerDied();
                 Destroy(gameObject);
             }
         }
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Deadly"))
         {
-            GameController.instance.PlayerDied();
+            GameControl.instance.PlayerDied();
             Destroy(gameObject);
         }
     }

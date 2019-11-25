@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class ScrollingObject : MonoBehaviour
 {
-    private float speed = .9f;
+    private float speed = 2f;
 
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(0, -GameController.instance.scrollSpeed * speed);
+        rb.velocity = new Vector2(0, -GameControl.instance.scrollSpeed * speed);
     }
 
     void Update()
     {
-        if(GameController.instance.gameOver == true)
+        if(GameControl.instance.gameOver == true)
         {
             rb.velocity = Vector2.zero;
         }

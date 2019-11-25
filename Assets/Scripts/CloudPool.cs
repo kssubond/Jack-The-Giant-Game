@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class CloudPool : MonoBehaviour
 {
-    public GameObject [] cloudPrefabs;                                    
-    public int cloudPoolSize = 4;                                    
-    public float spawnRate = 2.5f;                                    
-    public int cloudMin = -2;                                  
-    public int cloudMax = 2;                                   
+    public GameObject[] cloudPrefabs;
+    public GameObject coin;
 
-    private GameObject[] clouds;                                   
-    private int currentCloud = 0;                                    
+    public int cloudPoolSize = 4;
+    public float spawnRate = 2.5f;
+    public int cloudMin = -2;
+    public int cloudMax = 2;
 
-    private Vector2 objectPoolPosition = new Vector2(0, 5.5f);       
+    public float timer;
+    public float waitingTime;
+
+    private GameObject[] clouds;
+
+    private int currentCloud = 0;
+
+    private Vector2 objectPoolPosition = new Vector2(0, 5.5f);
     private float spawnYPosition = -5.5f;
     private float timeSinceLastSpawned;
     private int lastNumber;
@@ -22,6 +28,7 @@ public class CloudPool : MonoBehaviour
     void Start()
     {
         timeSinceLastSpawned = 0f;
+
         clouds = new GameObject[cloudPrefabs.Length];
 
         for (int i = 0; i < cloudPrefabs.Length; i++)
@@ -34,7 +41,7 @@ public class CloudPool : MonoBehaviour
     {
         timeSinceLastSpawned += Time.deltaTime;
 
-        if (GameController.instance.gameOver == false && timeSinceLastSpawned >= spawnRate)
+        if (GameControl.instance.gameOver == false && timeSinceLastSpawned >= spawnRate)
         {
             timeSinceLastSpawned = 0f;
             float spawnXPosition = GetRandom(cloudMin, cloudMax);
@@ -45,8 +52,12 @@ public class CloudPool : MonoBehaviour
             {
                 currentCloud = 0;
             }
+
         }
+
+        CoinSpawnTimer();
     }
+
     int GetRandom(int min, int max)
     {
         int rand = Random.Range(min, max);
@@ -54,5 +65,23 @@ public class CloudPool : MonoBehaviour
             rand = Random.Range(min, max);
         lastNumber = rand;
         return rand;
+    }
+
+    void CoinSpawn()
+    {
+        Vector2 pos = new Vector2(GetRandom(-2,2), -6);
+        Instantiate(coin, pos, Quaternion.identity);
+        coin = Instantiate(coin, pos, Quaternion.identity);
+    }
+
+    void CoinSpawnTimer()
+    {
+        timer += Time.deltaTime;
+
+        if (timer > waitingTime)
+        {
+            CoinSpawn();
+            timer = 0;
+        }
     }
 }
