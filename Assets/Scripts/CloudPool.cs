@@ -8,7 +8,7 @@ public class CloudPool : MonoBehaviour
     public GameObject coin;
 
     public int cloudPoolSize = 4;
-    public float spawnRate = 2.5f;
+    public static float spawnRate = 2.5f;
     public int cloudMin = -2;
     public int cloudMax = 2;
 
@@ -52,7 +52,6 @@ public class CloudPool : MonoBehaviour
             {
                 currentCloud = 0;
             }
-
         }
 
         CoinSpawnTimer();
@@ -71,7 +70,6 @@ public class CloudPool : MonoBehaviour
     {
         Vector2 pos = new Vector2(GetRandom(-2,2), -6);
         Instantiate(coin, pos, Quaternion.identity);
-        coin = Instantiate(coin, pos, Quaternion.identity);
     }
 
     void CoinSpawnTimer()

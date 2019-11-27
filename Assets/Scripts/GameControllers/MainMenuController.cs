@@ -5,28 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource clickSound;
+
+    void Start()
+    {
+        clickSound = GetComponent<AudioSource>();
+    }
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
-    }
-
-    public void HighscoreMenu()
-    {
-        SceneManager.LoadScene("HighscoreScene");
-    }
-
-   public void OptionsMenu()
-    {
+        clickSound.Play();
         SceneManager.LoadScene("OptionsScene");
     }
 
     public void QuitGame()
     {
-        QuitGame();
-    }
-
-    public void MusicButton()
-    {
-
+        clickSound.Play();
+        Application.Quit();
     }
 }

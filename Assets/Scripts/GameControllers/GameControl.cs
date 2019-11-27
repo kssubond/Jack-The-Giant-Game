@@ -16,10 +16,10 @@ public class GameControl : MonoBehaviour
     private GameObject player;
 
     [SerializeField]
-    private AudioClip coinClip;
+    private AudioSource coinClip;
 
     [SerializeField]
-    private GameObject pausePanel, gameOverPanel;
+    private GameObject gameOverPanel;
 
     void Awake()
     {
@@ -34,9 +34,9 @@ public class GameControl : MonoBehaviour
         }
     }
 
-    void Update()
+    void Start()
     {
-        
+        coinClip = GetComponent<AudioSource>();
     }
 
     public void PlayerScored()
@@ -45,6 +45,7 @@ public class GameControl : MonoBehaviour
             return;
         score++;
         scoreText.text = "x" + score.ToString();
+        coinClip.Play();
     }
 
     public void PlayerDied()

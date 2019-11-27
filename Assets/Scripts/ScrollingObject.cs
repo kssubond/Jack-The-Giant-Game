@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ScrollingObject : MonoBehaviour
 {
-    private float speed = 2f;
+    public static float speed = 2f;
 
     private Rigidbody2D rb;
 
