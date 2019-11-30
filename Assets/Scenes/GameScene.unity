@@ -1074,8 +1074,8 @@ MonoBehaviour:
   cloudPoolSize: 6
   cloudMin: -2
   cloudMax: 2
-  timer: 0.9
-  waitingTime: 0.8
+  timer: 2
+  waitingTime: -1
 --- !u!82 &798073494
 AudioSource:
   m_ObjectHideFlags: 0

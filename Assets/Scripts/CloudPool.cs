@@ -8,7 +8,7 @@ public class CloudPool : MonoBehaviour
     public GameObject coin;
 
     public int cloudPoolSize = 4;
-    public static float spawnRate = 2.5f;
+    public static float spawnRate = 1f;
     public int cloudMin = -2;
     public int cloudMax = 2;
 
@@ -16,11 +16,13 @@ public class CloudPool : MonoBehaviour
     public float waitingTime;
 
     private GameObject[] clouds;
+    private GameObject[] coins;
 
     private int currentCloud = 0;
+    private int currentCoin = 0;
 
     private Vector2 objectPoolPosition = new Vector2(0, 5.5f);
-    private float spawnYPosition = -5.5f;
+    private float spawnYPosition = -6.5f;
     private float timeSinceLastSpawned;
     private int lastNumber;
 
@@ -34,6 +36,13 @@ public class CloudPool : MonoBehaviour
         for (int i = 0; i < cloudPrefabs.Length; i++)
         {
             clouds[i] = Instantiate(cloudPrefabs[GetRandom(0, cloudPrefabs.Length)], objectPoolPosition, Quaternion.identity);
+        }
+
+        coins = new GameObject[cloudPoolSize];
+
+        for (int f = 0; f < coins.Length; f++)
+        {
+            coins[f] = Instantiate(coin, objectPoolPosition, Quaternion.identity);
         }
     }
 
@@ -52,9 +61,15 @@ public class CloudPool : MonoBehaviour
             {
                 currentCloud = 0;
             }
-        }
 
-        CoinSpawnTimer();
+            coins[currentCoin].transform.position = new Vector2(clouds[currentCloud].transform.position.x, (spawnYPosition + 0.75f));
+            currentCoin++;
+
+            if (currentCoin >= 6)
+            {
+                currentCoin = 0;
+            }
+        }
     }
 
     int GetRandom(int min, int max)
@@ -66,20 +81,15 @@ public class CloudPool : MonoBehaviour
         return rand;
     }
 
-    void CoinSpawn()
-    {
-        Vector2 pos = new Vector2(GetRandom(-2,2), -6);
-        Instantiate(coin, pos, Quaternion.identity);
-    }
 
-    void CoinSpawnTimer()
-    {
-        timer += Time.deltaTime;
+    //void CoinSpawnTimer()
+    //{
+    //    timer += Time.deltaTime;
 
-        if (timer > waitingTime)
-        {
-            CoinSpawn();
-            timer = 0;
-        }
-    }
+    //    if (timer > waitingTime)
+    //    {
+    //        //do something
+    //        timer = 0;
+    //    }
+    //}
 }
